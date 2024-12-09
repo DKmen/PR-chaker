@@ -100,6 +100,22 @@ To run this project using Docker, follow these steps:
 
 By following these steps, you will have the project up and running in a Dockerized environment, making it easy to manage dependencies and ensure consistency across different development setups.
 
+## Future Scope
+
+### GitHub-Based Login
+
+To enhance the functionality of this project, we plan to implement GitHub-based login. This will allow users to authenticate using their GitHub credentials and access personalized features based on their GitHub profile.
+
+### Fetch User Data
+
+Once authenticated, the application will fetch data using the user's GitHub profile. This data can include repositories, pull requests, and other relevant information to provide a more tailored code review experience.
+
+### Implement Test Cases
+
+To ensure the reliability and correctness of the functions within the project, we will implement comprehensive test cases. These test cases will cover various scenarios and edge cases to validate the functionality and performance of the code.
+
+By incorporating these features, the project will offer a more integrated and user-friendly experience, leveraging GitHub's capabilities to streamline the code review process.
+
 ## API Overview
 
 ### Analyze Pull Request
