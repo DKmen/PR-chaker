@@ -1,0 +1,60 @@
+version: "3.8"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fastapi
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@db:5432/mydb
+      - BROKER_URL=amqp://rabbit
+      - OLLAMA_URL=http://ollama:11434
+    depends_on:
+      - db
+      - rabbit
+      - ollama
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: celery_worker
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@db:5432/mydb
+      - BROKER_URL=amqp://rabbit
+      - OLLAMA_URL=http://ollama:11434
+    command: ["celery", "-A", "app.tasks.analysis", "worker", "--loglevel=DEBUG"]
+    depends_on:
+      - db
+      - rabbit
+      - ollama
+
+  db:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydb
+    ports:
+      - "5432:5432"
+
+  rabbit:
+    image: rabbitmq
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+
+  ollama:
+    image: ollama/ollama
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - /Users/dhrimilmendapara/.ollama:/root/.ollama
+
+volumes:
+  ollama:
